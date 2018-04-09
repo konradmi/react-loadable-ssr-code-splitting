@@ -1,27 +1,17 @@
-const path = require('path');
+const path = require('path')
+const merge = require('webpack-merge')
 const { ReactLoadablePlugin } = require('react-loadable/webpack');
 const webpack = require('webpack')
 
-module.exports = {
-  entry: {
-    main: './client',
-  },
+const baseConfig = require('./webpack.base.js')
+
+const config = {
+  entry: './client.js',
   output: {
-    path: path.join(__dirname, 'dist'),
     filename: '[name].js',
+    path: path.resolve(__dirname, 'dist'),
     chunkFilename: '[name].js',
     publicPath: '/dist/'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        },
-      },
-    ],
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -33,4 +23,6 @@ module.exports = {
       minChunks: Infinity
     })
   ]
-};
+}
+
+module.exports = merge(baseConfig, config)

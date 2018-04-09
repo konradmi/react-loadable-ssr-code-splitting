@@ -9,6 +9,7 @@ import App from './components/App';
 const stats = require('./dist/react-loadable.json');
 const app = express();
 
+app.use(express.static('dist'))
 app.get('/', (req, res) => {
   let modules = [];
   let html = ReactDOMServer.renderToString(
@@ -31,15 +32,15 @@ app.get('/', (req, res) => {
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>My App</title>
         ${styles.map(style => {
-          return `<link href="/dist/${style.file}" rel="stylesheet"/>`;
+          return `<link href="${style.file}" rel="stylesheet"/>`;
         }).join('\n')}
       </head>
       <body>
         <div id="app">${html}</div>
-        <script src="/dist/manifest.js"></script>
-        <script src="/dist/main.js"></script>
+        <script src="manifest.js"></script>
+        <script src="main.js"></script>
         ${scripts.map(script => {
-          return `<script src="/dist/${script.file}"></script>`
+          return `<script src="${script.file}"></script>`
         }).join('\n')}
         <script>window.main();</script>
       </body>
@@ -47,7 +48,7 @@ app.get('/', (req, res) => {
   `);
 });
 
-app.use('/dist', express.static(path.join(__dirname, 'dist')));
+// app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
 Loadable.preloadAll().then(() => {
   app.listen(3000, () => {

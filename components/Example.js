@@ -3,6 +3,8 @@ import Loadable from 'react-loadable';
 import Loading from './Loading';
 import path from 'path';
 
+import './Example.scss'
+
 const LoadableNested = Loadable({
   loader: () => import('./ExampleNested'),
   loading: Loading,
