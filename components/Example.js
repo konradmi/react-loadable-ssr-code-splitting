@@ -9,7 +9,6 @@ const LoadableNested = Loadable({
 });
 
 export default function Example() {
-  console.log('Example')
   return (
     <div>
       <h1>Hello from a loadable component</h1>
